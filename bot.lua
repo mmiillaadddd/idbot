@@ -467,7 +467,7 @@ local function do_keyboard_private()
     keyboard.inline_keyboard = {
     {
     	{text = 'Channel' , url = 'telegram.me/GoldTeam'
-			{text='👤PV SUDO',url='http://telegram.me/mmiillaadddddd'},
+			{text='👤PV SUDO',url='http://telegram.me/mmiillaadddddd'
     }
     return keyboard
 end
