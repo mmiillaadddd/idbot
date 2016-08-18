@@ -466,11 +466,8 @@ local function do_keyboard_private()
     local keyboard = {}
     keyboard.inline_keyboard = {
     {
-    	{text = 'M.KH Channel 🇮🇷', url = 'https://telegram.me/joinchat/C170sT3nHGn5yzfOv-ntvQ'},
-			{text = 'M.KH 🌐WEBSITE' , url = 'cruel-plus.ir'}
-	    }, 
-		{
-			{text='👤PV SUDO',url='http://telegram.me/it_mkh'},
+    	{text = 'Channel' , url = 'telegram.me/GoldTeam'
+			{text='👤PV SUDO',url='http://telegram.me/mmiillaadddddd'},
 		},
     }
     return keyboard
@@ -490,7 +487,7 @@ user = bot.username
 else
 user = msg.from.username
 end
-local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n-به همه ی سوالات پاسخ داده میشود\n\nبا تشکر [M.KH](http://telegram.me/it_mkh)\n"
+local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n
 local keyboard = do_keyboard_private()
             sendKeyboard(msg.chat.id, text, keyboard, true)
 elseif msg.text == "/start" and is_add(msg) then
@@ -501,8 +498,7 @@ user = bot.username
 else
 user = msg.from.username
 end
-local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n-به همه ی سوالات پاسخ داده میشود\n\nبا تشکر [M.KH](http://telegram.me/it_mkh)\n"
-local keyboard = do_keyboard_private()
+local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n
             sendKeyboard(msg.chat.id, text, keyboard, true)
 elseif is_admin(msg) and msg.text == "/users" then
  	local r = tostring(#add.id)
