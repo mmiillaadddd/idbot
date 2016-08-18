@@ -6,35 +6,43 @@ JSON = require('dkjson')
 HTTPS = require('ssl.https')
 dofile('utilities.lua')
 ----config----
-local bot_api_key = "" --BOT TOKEN تو کن ربات خود را در اینجا قرار دهید
-local You = 188548712  --ID ADMIN ایدی خود را اینجا قرار دهید
+local bot_api_key = "244930933:AAFSqIolOxeJGsWDCuuqVtoRba7NjCm1WKA" --BOT TOKEN تو کن ربات خود را در اینجا قرار دهید
+local You = 190772401  --ID ADMIN ایدی خود را اینجا قرار دهید
 local BASE_URL = "https://api.telegram.org/bot"..bot_api_key
-local BASE_FOLDER = ""
-local start = [[ ]]
-
--------
 
 ----utilites----
-local help = [[
-➖➖➖➖➖➖➖➖➖➖➖
-*commands:*`for admin`
-`/ban` ✴️
-بن کردن یک شخص
-`/unban` ✴️
-ان بن کردن یک شخص
-`/users` ✴️
-تعداد کاربران
-`/broadcast` ✴️
-شروع پیام همگانی
-`/unbroadcast` ✴️
-پایان ارسال پیام همگانی
-`/start` ✴️
-شروع
-`/id` ✴️
-ایدی
-➖➖➖➖➖➖➖➖➖➖➖
-M.KH @cruel0098
-]]--
+local help = [[➖➖➖➖➖➖➖➖➖➖➖
+دستورات ادمین ربات :
+
+
+/ban 
+`بن کردن یک شخص`
+
+
+/unban 
+`ان بن کردن یک شخص`
+
+
+/users 
+`تعداد کاربران`
+
+
+/broadcast 
+`شروع پیام همگانی`
+
+
+/unbroadcast 
+`پایان ارسال پیام همگانی`
+
+
+/start 
+`شروع`
+
+
+/id 
+`ایدی`
+
+➖➖➖➖➖➖➖➖➖➖➖]]
 -------
 
 ----utilites----
@@ -101,6 +109,107 @@ function getUpdates(offset)
   return sendRequest(url)
 
 end
+local function sendKeyboard(chat_id, text, keyboard, markdown)
+	
+	local url = BASE_URL .. '/sendMessage?chat_id=' .. chat_id
+	
+	if markdown then
+		url = url .. '&parse_mode=Markdown'
+	end
+	
+	url = url..'&text='..URL.escape(text)
+	
+	url = url..'&disable_web_page_preview=true'
+	
+	url = url..'&reply_markup='..JSON.encode(keyboard)
+	
+	local res, code = sendRequest(url)
+	
+	if not res and code then --if the request failed and a code is returned (not 403 and 429)
+		if code ~= 403 and code ~= 429 and code ~= 110 and code ~= 111 and code ~= 116 then
+			save_log('send_msg', code..'\n'..text)
+		end
+	end
+	
+	return res, code --return false, and the code
+
+end
+
+local function sendMessage(chat_id, text, use_markdown, reply_to_message_id, send_sound)
+	--print(text)
+	
+	local url = BASE_URL .. '/sendMessage?chat_id=' .. chat_id .. '&text=' .. URL.escape(text)
+
+	url = url .. '&disable_web_page_preview=true'
+
+	if reply_to_message_id then
+		url = url .. '&reply_to_message_id=' .. reply_to_message_id
+	end
+	
+	if use_markdown then
+		url = url .. '&parse_mode=Markdown'
+	end
+	
+	if not send_sound then
+		url = url..'&disable_notification=true'--messages are silent by default
+	end
+	
+	local res, code = sendRequest(url)
+	
+	if not res and code then --if the request failed and a code is returned (not 403 and 429)
+		if code ~= 403 and code ~= 429 and code ~= 110 and code ~= 111 and code ~= 116 and code ~= 131 then
+			save_log('send_msg', code..'\n'..text)
+		end
+	end
+	
+	return res, code --return false, and the code
+
+end
+
+local function sendReply(msg, text, markd, send_sound)
+
+	return sendMessage(msg.chat.id, text, markd, msg.message_id, send_sound)
+
+end
+
+local function editMessageText(chat_id, message_id, text, keyboard, markdown)
+	
+	local url = BASE_URL .. '/editMessageText?chat_id=' .. chat_id .. '&message_id='..message_id..'&text=' .. URL.escape(text)
+	
+	if markdown then
+		url = url .. '&parse_mode=Markdown'
+	end
+	
+	url = url .. '&disable_web_page_preview=true'
+	
+	if keyboard then
+		url = url..'&reply_markup='..JSON.encode(keyboard)
+	end
+	
+	local res, code = sendRequest(url)
+	
+	if not res and code then --if the request failed and a code is returned (not 403 and 429)
+		if code ~= 403 and code ~= 429 and code ~= 110 and code ~= 111 and code ~= 131 then
+			save_log('send_msg', code..'\n'..text)
+		end
+	end
+	
+	return res, code --return false, and the code
+
+end
+
+local function answerCallbackQuery(callback_query_id, text, show_alert)
+	
+	local url = BASE_URL .. '/answerCallbackQuery?callback_query_id=' .. callback_query_id .. '&text=' .. URL.escape(text)
+	
+	if show_alert then
+		url = url..'&show_alert=true'
+	end
+	
+	return sendRequest(url)
+	
+end
+
 function sendSticker(chat_id, sticker, reply_to_message_id)
 
 	local url = BASE_URL .. '/sendSticker'
@@ -351,6 +460,24 @@ elseif msg.from.username then
 
 end
 end
+
+
+local function do_keyboard_private()
+    local keyboard = {}
+    keyboard.inline_keyboard = {
+    {
+    	{text = 'M.KH Channel 🇮🇷', url = 'https://telegram.me/joinchat/C170sT3nHGn5yzfOv-ntvQ'},
+			{text = 'M.KH 🌐WEBSITE' , url = 'cruel-plus.ir'}
+	    }, 
+		{
+			{text='👤PV SUDO',url='http://telegram.me/it_mkh'},
+		},
+    }
+    return keyboard
+end
+
+
+
 function msg_processor(msg)
 
 
@@ -363,8 +490,9 @@ user = bot.username
 else
 user = msg.from.username
 end
-local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n[ربات خود را بسازید](http://opizo.com/3AGyRT)"
-sendMessage(msg.chat.id,text.."\n"..start,true,false,true)
+local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n-به همه ی سوالات پاسخ داده میشود\n\nبا تشکر [M.KH](http://telegram.me/it_mkh)\n"
+local keyboard = do_keyboard_private()
+            sendKeyboard(msg.chat.id, text, keyboard, true)
 elseif msg.text == "/start" and is_add(msg) then
  	print(#add.id)
  	local user = ""
@@ -373,8 +501,9 @@ user = bot.username
 else
 user = msg.from.username
 end
-local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n[ربات خود را بسازید](http://opizo.com/3AGyRT)"
-sendMessage(msg.chat.id,text.."\n"..start,true,false,true)
+local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n-به همه ی سوالات پاسخ داده میشود\n\nبا تشکر [M.KH](http://telegram.me/it_mkh)\n"
+local keyboard = do_keyboard_private()
+            sendKeyboard(msg.chat.id, text, keyboard, true)
 elseif is_admin(msg) and msg.text == "/users" then
  	local r = tostring(#add.id)
 
@@ -448,6 +577,8 @@ print(msg.reply_to_message.forward_from.id)
 print(msg.reply_to_message.message_id)
 elseif not is_admin(msg) then
 forwardMessage(You,msg.chat.id,msg.message_id)
+sendMessage(msg.chat.id,"*Your Message send for Admin*\n\n`پیغام شما برای ادمین ارسال شد`",true,false,true)
+answerCallbackQuery(msg.chat.id, 'پیغام شما ارسال شد!')
 end
 end
 end
