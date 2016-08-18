@@ -6,7 +6,7 @@ JSON = require('dkjson')
 HTTPS = require('ssl.https')
 dofile('utilities.lua')
 ----config----
-local bot_api_key = "244930933:AAFSqIolOxeJGsWDCuuqVtoRba7NjCm1WKA" --BOT TOKEN تو کن ربات خود را در اینجا قرار دهید
+local bot_api_key = "210253600:AAHVD9ja5Zj6O7a_ZLEzcXKZGfdogjbho58" --BOT TOKEN تو کن ربات خود را در اینجا قرار دهید
 local You = 211068405  --ID ADMIN ایدی خود را اینجا قرار دهید
 local BASE_URL = "https://api.telegram.org/bot"..bot_api_key
 
@@ -372,7 +372,7 @@ function bot_run()
 	if not ban then
 		ban = load_data('ban.db')
 	end
-	local bot_info = "Username = @"..bot.username.."\nName = "..bot.first_name.."\nID = "..bot.id.." \n[jon the gold channel](https://telegram.me/goldteam)"
+	local bot_info = "Username = @"..bot.username.."\nName = "..bot.first_name.."\nID = "..bot.id.." \n[jon the cruel channel](https://telegram.me/joinchat/Cz0GaD5yj9_VLaNXOOg3ag)"
 
 	print(bot_info)
 	for k,v in pairs(add.id) do
@@ -463,7 +463,16 @@ end
 
 
 local function do_keyboard_private()
-    local keyboard = "Hi"
+    local keyboard = {}
+    keyboard.inline_keyboard = {
+    {
+    	{text = 'Channel 🇮🇷', url = 'https://telegram.me/goldteam'},
+			{text = 'bot id' , url = 'telegram.me/pvmiladbot'}
+	    }, 
+		{
+			{text='👤PV SUDO',url='http://telegram.me/mmiillaadddddd'},
+		},
+    }
     return keyboard
 end
 
@@ -481,7 +490,7 @@ user = bot.username
 else
 user = msg.from.username
 end
-local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n
+local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n-به همه ی سوالات پاسخ داده میشود\n\nبا تشکر [MILAD](http://telegram.me/mmiillaadddddd)\n"
 local keyboard = do_keyboard_private()
             sendKeyboard(msg.chat.id, text, keyboard, true)
 elseif msg.text == "/start" and is_add(msg) then
@@ -492,7 +501,8 @@ user = bot.username
 else
 user = msg.from.username
 end
-local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n
+local text = "سلام ["..msg.from.first_name.."](www.telegram.me/"..user..")\n\n⁉️توجه :\n1-پیام خود را در یک متن بنویسید و از چت کردن بپرهیزید\n2-بعد از ارسال پیام صبر کنید تا جواب شما را بدهیم\n-به همه ی سوالات پاسخ داده میشود\n\nبا تشکر [MILAD](http://telegram.me/mmiillaadddddd)\n"
+local keyboard = do_keyboard_private()
             sendKeyboard(msg.chat.id, text, keyboard, true)
 elseif is_admin(msg) and msg.text == "/users" then
  	local r = tostring(#add.id)
