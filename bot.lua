@@ -468,7 +468,6 @@ local function do_keyboard_private()
     {
     	{text = 'Channel' , url = 'telegram.me/GoldTeam'
 			{text='👤PV SUDO',url='http://telegram.me/mmiillaadddddd'},
-		},
     }
     return keyboard
 end
