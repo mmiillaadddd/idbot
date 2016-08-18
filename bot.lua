@@ -372,7 +372,7 @@ function bot_run()
 	if not ban then
 		ban = load_data('ban.db')
 	end
-	local bot_info = "Username = @"..bot.username.."\nName = "..bot.first_name.."\nID = "..bot.id.." \n[jon the cruel channel](https://telegram.me/joinchat/Cz0GaD5yj9_VLaNXOOg3ag)"
+	local bot_info = "Username = @"..bot.username.."\nName = "..bot.first_name.."\nID = "..bot.id.." \n[jon the gold channel](https://telegram.me/goldteam)"
 
 	print(bot_info)
 	for k,v in pairs(add.id) do
@@ -463,12 +463,7 @@ end
 
 
 local function do_keyboard_private()
-    local keyboard = {}
-    keyboard.inline_keyboard = {
-    {
-    	{text = 'Channel' , url = 'telegram.me/GoldTeam'}
-			{text='👤PV SUDO',url='http://telegram.me/mmiillaadddddd'}
-    }
+    local keyboard = "Hi"
     return keyboard
 end
 
